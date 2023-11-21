@@ -1,29 +1,3 @@
 {
-  "posts": [
-    {
-      "title": "hi",
-      "body": "hii",
-      "id": 1
-    },
-    {
-      "title": "hi",
-      "body": "hii",
-      "id": 2
-    },
-    {
-      "title": "dfd",
-      "body": "fsdf",
-      "id": 3
-    },
-    {
-      "title": "ffd",
-      "body": "dd",
-      "id": 4
-    },
-    {
-      "title": "ffd",
-      "body": "dd",
-      "id": 5
-    }
-  ]
+  "posts": []
 }

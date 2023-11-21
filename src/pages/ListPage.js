@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Card from '../components/Card';
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link} from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const ListPage = () => {
+    const history = useHistory();
     const [posts, setPosts] = useState([]);
 
     const getPosts = () => {
@@ -11,6 +13,14 @@ const ListPage = () => {
             setPosts(res.data);
         })
     }
+
+    const deleteBlog = (e,id) =>{
+        e.stopPropagation();
+        
+        axios.delete(`http://localhost:3001/posts/${id}`).then(()=>{
+            setPosts(prevPosts => prevPosts.filter(post =>post.id !== id))
+        });
+    };
 
     useEffect(() => {
         getPosts();
@@ -27,13 +37,21 @@ const ListPage = () => {
                 </Link>
             </div>
             </div>
-            {posts.map(post => {
+            {posts.length > 0 ? posts.map(post => {
                 return (
-                    <Card key={post.id} title={post.title}>
-                        <div>hi</div>
-                    </Card>
+                    <Card 
+                    key={post.id} 
+                    title={post.title} 
+                    onClick={()=>history.push('/blogs/edit')}>
+                    <div>
+                       < button className="btn btn-danger btn-sm"
+                         onClick={(e) => deleteBlog(e, post.id)}>
+                        Delete
+                       </button>
+                    </div>
+                   </Card>
                 );
-            })}
+            }) : 'No blog posts found'}
         </div>
     );
 };
