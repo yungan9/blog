@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "title": "test",
-      "body": "one",
-      "id": 1
-    },
-    {
-      "title": "test2",
-      "body": "two",
-      "id": 2
-    },
-    {
-      "title": "test3",
-      "body": "three",
-      "id": 3
-    },
-    {
       "title": "timetest",
       "body": "time",
       "createdAt": 1700585391984,
