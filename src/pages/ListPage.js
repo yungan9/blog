@@ -22,6 +22,7 @@ const ListPage = () => {
             {posts.map(post => {
                 return (
                     <Card key={post.id} title={post.title}>
+                        <div>hi</div>
                     </Card>
                 );
             })}
