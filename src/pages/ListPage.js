@@ -44,7 +44,7 @@ const ListPage = () => {
                 <Card 
                 key={post.id} 
                 title={post.title} 
-                onClick={()=>history.push('/blogs/edit')}>
+                onClick={()=>history.push(`/blogs/${post.id}`)}>
                 <div>
                    < button className="btn btn-danger btn-sm"
                      onClick={(e) => deleteBlog(e, post.id)}>
