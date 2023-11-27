@@ -28,7 +28,8 @@ const ShowPage = () => {
         return <LoadingSpinner/>
     }
 
-    return <div>
+    return (
+    <div>
         <div className="d-flex">
             <h1 className="flex-grow-1">{post.title}</h1>
             <div>
@@ -43,7 +44,8 @@ const ShowPage = () => {
             </small>
             <hr/>
         <p>{post.body}</p>
-    </div>;
+    </div>
+    );
     
 };
 

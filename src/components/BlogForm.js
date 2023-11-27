@@ -3,7 +3,7 @@ import axios from "axios";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import {bool} from 'prop-types';
 
-const BlogForm = ({editing}) => {
+const BlogForm = ({ editing }) => {
     const history = useHistory();
     const {id} = useParams();
 
@@ -18,6 +18,15 @@ const BlogForm = ({editing}) => {
     },[id]);
 
     const onSubmit = () => {
+        if(editing){
+            axios.patch(`http://localhost:3001/posts/${id}`,{
+                title,
+                body,
+            }).then(res =>{
+                console.log(res);
+            })
+        }
+        else{
         axios.post('http://localhost:3001/posts', {
             title,
             body,
@@ -25,6 +34,7 @@ const BlogForm = ({editing}) => {
         }).then(()=>{
             history.push('/blogs');
         })
+    }
     };
 
     return (
@@ -56,7 +66,9 @@ const BlogForm = ({editing}) => {
             <button
                 className="btn btn-primary"
                 onClick={onSubmit}
-            >Post</button>
+            >
+                {editing ? 'Edit' : 'Post'}
+            </button>
 
         </div>
     );
