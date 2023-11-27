@@ -2,9 +2,24 @@
   "posts": [
     {
       "title": "nn",
-      "body": "nnnnnn",
+      "body": "nn",
       "createdAt": 1700585391984,
-      "id": 4
+      "id": 4,
+      "publish": true
+    },
+    {
+      "title": "no",
+      "body": "no",
+      "publish": false,
+      "createdAt": 1701095280921,
+      "id": 5
+    },
+    {
+      "title": "yes",
+      "body": "yes",
+      "publish": true,
+      "createdAt": 1701095299512,
+      "id": 6
     }
   ]
 }
