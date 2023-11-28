@@ -6,20 +6,35 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import LoadingSpinner from "../components/LoadingSpinner";
 import {bool} from 'prop-types';
 import Pagination from "./Pagination";
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
 
 
 const BlogList =({isAdmin})=>{
 
     const history = useHistory();
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const pageParam = params.get('page');
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState([true]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [numberOfPosts, setNumberOfPosts] = useState(0);
+    const [numberOfPages, setNumberOfPages] = useState(0);
+    const limit = 1;
 
+    useEffect(()=>{
+        setNumberOfPages(Math.ceil(numberOfPosts/limit));
+    }, [numberOfPosts]);
+
+    const onClickPageButton = (page) => {
+        history.push(`/admin?page=${page}`)
+        getPosts(page);
+    }
     const getPosts = (page = 1) => {
         setCurrentPage(page);
         let params ={
             _page:page,
-            _limit: 5,
+            _limit: limit,
             _sort: 'id',
             _order:'desc',
         }
@@ -31,10 +46,15 @@ const BlogList =({isAdmin})=>{
         axios.get(`http://localhost:3001/posts?`,{
             params
         }).then((res) => {
+            setNumberOfPosts(res.headers['x-total-count']);
             setPosts(res.data);
             setLoading(false);
         })
     }
+
+    useEffect(()=> {
+        getPosts(parseInt(pageParam));
+    }, [pageParam]);
 
     const deleteBlog = (e,id) =>{
         e.stopPropagation();
@@ -43,10 +63,6 @@ const BlogList =({isAdmin})=>{
             setPosts(prevPosts => prevPosts.filter(post =>post.id !== id))
         });
     };
-
-    useEffect(() => {
-        getPosts();
-    }, []);
     
     if(loading){
         return (
@@ -78,10 +94,10 @@ const BlogList =({isAdmin})=>{
     return (
         <div>
             {renderBlogList()}
-            <Pagination 
+            {numberOfPages > 1 && <Pagination 
             currentPage={currentPage} 
-            numberOfPages={5}
-            onClick={getPosts}/>
+            numberOfPages={numberOfPages}
+            onClick={onClickPageButton}/>}
         </div>
     )
 };
